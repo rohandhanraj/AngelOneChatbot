@@ -1,0 +1,12 @@
+streamlit
+ai-tech-crawler
+openai
+langchain
+langchain-community
+langchain-openai
+langgraph
+faiss-cpu
+tqdm
+python-dotenv
+PyPDF2
+nest_asyncio
