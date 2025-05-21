@@ -175,3 +175,4 @@ cython_debug/
 AngelOneRAG
 logs
 vectorstore/*
+node_modules
