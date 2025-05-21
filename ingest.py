@@ -4,6 +4,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.docstore.document import Document
 from utils import extract_text_from_pdf, crawl_angelone_support
+import logging
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,8 +19,10 @@ def ingest_data():
     print('Documented PDFs')
     
     web_docs = crawl_angelone_support()
-    print(f'Web Docs :: {web_docs}')
-    print('Documented Webpage')
+    # logging.info(f'Web Docs :: {web_docs}')
+    logging.info('Documented Webpage')
+
+    docs += web_docs
 
     splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
     chunks = splitter.split_documents(docs)
