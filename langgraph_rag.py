@@ -7,9 +7,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def get_rag_graph():
-    llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+    llm = ChatOpenAI(model="gpt-4o", temperature=0.4)
     vectordb = FAISS.load_local("vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
-    retriever = vectordb.as_retriever(search_kwargs={"k": 3})
+    retriever = vectordb.as_retriever(search_kwargs={"k": 5})
 
     workflow = StateGraph(GraphState)
 
