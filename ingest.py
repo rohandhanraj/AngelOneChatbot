@@ -5,6 +5,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.docstore.document import Document
 from utils import extract_text_from_pdf, crawl_angelone_support
 import logging
+import pickle
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,14 +19,20 @@ def ingest_data():
             docs.append(Document(page_content=text, metadata={"source": fname}))
     print('Documented PDFs')
     
-    web_docs = crawl_angelone_support()
-    # logging.info(f'Web Docs :: {web_docs}')
+    pkl_file_path = 'data/support_docs/web_docs.pkl'
+    if not os.path.exists(pkl_file_path):
+        web_chunks = crawl_angelone_support()
+        with open(pkl_file_path, 'wb') as f:
+            pickle.dump(web_chunks, f)
+    else:
+        with open(pkl_file_path, 'rb') as f:
+            web_chunks = pickle.load(f)
+
+    logging.info(f'Web Chunks :: {web_chunks}')
     logging.info('Documented Webpage')
 
-    docs += web_docs
-
     splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
-    chunks = splitter.split_documents(docs)
+    chunks = splitter.split_documents(docs + web_chunks)
     print('Chunked Data')
 
     embeddings = OpenAIEmbeddings()

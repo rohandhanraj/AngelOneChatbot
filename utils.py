@@ -1,6 +1,7 @@
 import os
 from ai_tech_crawler import SmartScraperAgent
 from PyPDF2 import PdfReader
+import pickle
 
 def extract_text_from_pdf(pdf_path):
     reader = PdfReader(pdf_path)
@@ -20,3 +21,5 @@ def crawl_angelone_support(base_url="https://www.angelone.in/support"):
     )
 
     return smart_scraper_agent.load_indepth_and_split(depth=2)
+        
+
